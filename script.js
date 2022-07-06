@@ -30,39 +30,40 @@ window.onload = function () {
         let s2 = data.Valute.EUR.Value; 
         let s3 = data.Valute.BYN.Value;
         let s4 = data.Valute.UAH.Value;
-        let c = { 'USD': s1, 'EUR': s2, 'RUB': '1', 'BYN': s3, 'UAH': s4 }; // Устанавливаем курс валют
-
-        let val = document.getElementById('val'); 
+        let c = { 'USD': s1, 'EUR': s2, 'BYN': s3, 'UAH': s4, 'RUB': '1' }; // Устанавливаем курс валют
+        console.log(s2);
+        let val = document.getElementById('val'); // Получаем элемент ввода данных
         let currency1 = document.getElementById('cur1'); 
         let currency2 = document.getElementById('cur2'); 
         let result = document.getElementsByClassName('output')[0]; // Получаем поле куда будем писать результат
         function summ() { 
             let z = 0;
-            if (currency1.value === currency2.value) {
+            if (currency1.value === currency2.value) { // Если оба значения в селектах равны
                 result.innerText = val.value; 
             } else {
-                if (currency1.value != 'RUB') { 
+                if (currency1.value != 'RUB') {
                     z = val.value * c[currency1.value]; 
-                    result.innerHTML = Math.ceil((z / c[currency2.value]) * 100) / 100; 
-                } else { 
-                    result.innerHTML = Math.ceil((val.value * c[currency2.value]) * 100) / 100; 
+                    console.log(z);
+                    result.innerHTML = (((z / c[currency2.value]) * 100) / 100).toFixed(4); 
+                } else { // Если не равны
+                    result.innerHTML = (((val.value / c[currency2.value]) * 100) / 100).toFixed(4); 
                 }
             }
         }
 
-        val.oninput = function () { 
+        val.oninput = function () { // При вводе данных в поле вызываем функцию.
             summ();
-            if (this.value.include('-')) {
-                this.value = '0';
-            }
+            // if (this.value.include('-')) {
+            //     this.value = '0';
+            // }
         };
-        currency1.onchange = function () { 
+        currency1.onchange = function () { // При смене первого селекта вызываем функцию.
             summ();
         };
-        currency2.onchange = function () { 
+        currency2.onchange = function () { // При смене второго селекта вызываем функцию.
             summ();
         }
-        let USDrate = data.Valute.USD.Value.toFixed(2).replace('.', ',');
+        let USDrate = data.Valute.USD.Value.toFixed(4).replace('.', ',');
         let USD = document.getElementById('USD');
         USD.innerHTML = USD.innerHTML.replace('', USDrate);
 
@@ -81,5 +82,6 @@ window.onload = function () {
 
     );
 }
+
 
 
