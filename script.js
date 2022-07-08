@@ -82,6 +82,9 @@ window.onload = function () {
 
     );
 }
+function check(key) {
+  return (key >= '0' && key <= '9');
+}
 
 
 
